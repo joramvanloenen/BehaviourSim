@@ -28,7 +28,7 @@ try {
   await page.locator('[data-speed="12"]').click();
   await page.waitForFunction(() => Number(document.querySelector('#interactions').textContent) >= 5, null, { timeout: 20000 });
   assert.ok(await page.locator('#concepts .concept-row').count() >= 3);
-  const before = Number(await page.locator('#interactions').textContent);
+  const before = Number(await page.locator('#interactions').textContent());
   await page.locator('[data-spawn="berry"]').click();
   await page.locator('#scene').click({ position: { x: 210, y: 130 } });
   await page.locator('#selectedDetails').getByText('World truth: berry', { exact: false }).waitFor();
