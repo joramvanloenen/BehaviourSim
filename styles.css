@@ -172,7 +172,8 @@ button:focus-visible, canvas:focus-visible { outline: 2px solid #bad8b3; outline
 }
 @media (max-width: 540px) {
   .shell { padding: 0 9px 13px; }
-  .topbar { margin-bottom: 12px; min-height: 84px; align-items: center; }
+  .topbar { margin-bottom: 12px; min-height: 84px; align-items: center; flex-wrap: wrap; padding: 12px 0; gap: 10px; }
+  .header-right { width: 100%; justify-content: flex-end; }
   .brandmark { width: 32px; height: 32px; border-radius: 9px; }
   .brandmark span { font-size: 24px; }
   .brand { gap: 8px; }
@@ -182,7 +183,7 @@ button:focus-visible, canvas:focus-visible { outline: 2px solid #bad8b3; outline
   .top-controls { gap: 5px; }
   .speed { padding: 5px 6px; font-size: 10px; }
   .control-button { padding: 7px 8px; font-size: 10px; }
-  .control-button.subtle { display: none; }
+  .control-button.subtle { padding: 7px 8px; }
   .section-top { padding: 17px 15px 14px; }
   .section-top h2 { font-size: 19px; }
   .world-clock { font-size: 8px; letter-spacing: .3px; }
