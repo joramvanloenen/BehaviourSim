@@ -6,6 +6,8 @@
 
 Once GitHub Pages has deployed, open **https://joramvanloenen.github.io/BehaviourSim/**.
 
+> **First-time Pages setup:** This repository was created without GitHub Pages enabled. GitHub Actions cannot enable it with the current workflow token. Open **Repository → Settings → Pages**, choose **GitHub Actions** as the build/deployment source, then open **Actions → Publish BehaviourSim → Run workflow**. After the first successful deployment, the URL above will work.
+
 To run locally without any tools beyond Python:
 
 ```bash
