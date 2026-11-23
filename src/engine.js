@@ -147,18 +147,21 @@ export class Brain {
       const novelty = 1.25 / Math.sqrt(1 + c.encounters * 0.2);
       for (const action of ACTIONS) {
         const n = c.counts[action] || 0;
-        const familiarity = 1 / Math.sqrt(1 + n);
+        // An upper-confidence bonus encourages testing unfamiliar actions.
+        // Repeated positive experiences become habits, but do not eliminate exploration.
+        const learningOpportunity = Math.min(3.3,
+          1.65 * Math.sqrt(Math.log(2 + c.encounters) / (1 + n)));
         let bias = 0;
-        if (action === 'bite') bias += pet.hunger / 42 - 0.7;
-        if (action === 'touch') bias += pet.curiosity / 95;
-        if (action === 'push') bias += pet.curiosity / 130;
-        if (action === 'play') bias += pet.energy / 110 - pet.stress / 160;
-        if (action === 'observe') bias += pet.stress / 90 + 0.2;
-        const fearPenalty = c.fear * (action === 'observe' ? 0.1 : 1.1);
+        if (action === 'bite') bias += (pet.hunger / 100) * 2.7 - 0.65;
+        if (action === 'touch') bias += pet.curiosity / 140;
+        if (action === 'push') bias += pet.curiosity / 150 + 0.1;
+        if (action === 'play') bias += pet.energy / 155 - pet.stress / 100;
+        if (action === 'observe') bias += pet.stress / 125 + 0.23;
+        const fearPenalty = c.fear * (action === 'observe' ? 0.08 : 1.2);
         const q = c.q[action] || 0;
-        const score = q * 0.7 + novelty * 0.7 + familiarity * 1.25 +
+        const score = q * 0.55 + learningOpportunity + novelty * 0.2 +
           bias - fearPenalty - Math.abs(obj.x - pet.x) / 125 +
-          random(-0.5, 0.5);
+          random(-0.45, 0.45);
         if (score > bestScore) {
           bestScore = score;
           best = { objectId: obj.id, action, categoryId: c.id, expected: q };
@@ -338,7 +341,7 @@ export class Simulation {
         shove(23);
         if (obj.damage >= 2) {
           obj.alive = false; obj.respawn = 35;
-          this.objects.push(newObj('berry', clamp(obj.x + 8, 20, WIDTH - 20)));
+          if (this.objects.length < 24) this.objects.push(newObj('berry', clamp(obj.x + 8, 20, WIDTH - 20)));
           result.message = 'The shell cracked! Something edible rolled out.';
           result.pleasure = 2.4; p.curiosity -= 12; burst('#d0b874', 12);
         } else { result.message = 'Its shell rattled. Something is inside.'; result.pleasure = 1.1; }
