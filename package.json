@@ -1,0 +1,10 @@
+{
+  "name": "behavioursim",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A tiny embodied pet that learns from physical consequences.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  }
+}
