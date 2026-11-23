@@ -33,7 +33,12 @@ try {
   await page.locator('#scene').click({ position: { x: 210, y: 130 } });
   await page.locator('#selectedDetails').getByText('World truth: berry', { exact: false }).waitFor();
   await page.locator('#pause').click();
+  const store = await page.evaluate(() => localStorage.getItem('behavioursim.prototype.v1'));
+  console.log('Before reload', before, 'stored memory count', store ? JSON.parse(store).brain.totalInteractions : 'MISSING');
+  await page.screenshot({ path: 'behavioursim-desktop.png', fullPage: true });
   await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(550);
+  console.log('After reload:', await page.locator('#interactions').textContent(), 'runtime errors:', pageErrors);
   await page.waitForFunction(v => Number(document.querySelector('#interactions').textContent) >= v, before, { timeout: 5000 });
   assert.deepEqual(pageErrors, [], 'Browser runtime errors: ' + pageErrors.join('; '));
   await page.screenshot({ path: 'behavioursim-desktop.png', fullPage: true });
