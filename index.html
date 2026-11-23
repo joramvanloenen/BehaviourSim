@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#121b1b">
+  <meta name="description" content="BehaviourSim is a tiny autonomous creature that learns through perception, play, touch, and physical consequences.">
+  <title>BehaviourSim — a small world, a learning mind</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brandmark" aria-hidden="true"><span>◈</span></div>
+        <div class="brand-copy"><h1>Behaviour<span>Sim</span></h1><p>AN EXPERIMENT IN EMERGENT BEHAVIOUR</p></div>
+      </div>
+      <div class="header-right">
+        <div class="run-tag"><span class="status-dot" id="runDot"></span><span id="runIndicator">AUTONOMOUS</span></div>
+        <div class="top-controls">
+          <div class="speed-group" aria-label="Simulation speed">
+            <button type="button" class="speed active" data-speed="1">1×</button>
+            <button type="button" class="speed" data-speed="4">4×</button>
+            <button type="button" class="speed" data-speed="12">12×</button>
+          </div>
+          <button type="button" id="pause" class="control-button">Pause</button>
+          <button type="button" id="reset" class="control-button subtle" title="Reset creature and learning">Reset</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <div class="left-panel">
+        <section class="world-card">
+          <div class="section-top">
+            <div>
+              <div class="eyebrow"><span class="pulse-pip"></span> HABITAT / 001</div>
+              <h2>A world to discover</h2>
+            </div>
+            <div class="world-clock" id="worldClock">DAY 01 · 06:00</div>
+          </div>
+          <div class="stage-wrap">
+            <canvas id="scene" width="480" height="270" role="img" aria-label="Interactive pixel-art world with an autonomous woodland creature and objects. Tap an object to inspect it."></canvas>
+            <div class="world-corner top-left"><span>LIVE ECOSYSTEM</span><span class="corner-line"></span></div>
+            <div class="world-corner top-right">48° 34′ N<br>EXPERIMENT 001</div>
+            <div class="world-corner bottom-left" id="sceneHint">Tap an object to inspect it</div>
+            <div class="world-corner bottom-right">30 HZ SIMULATION</div>
+            <div id="eventToast" class="event-toast" role="status" aria-live="polite"></div>
+          </div>
+          <div class="tools-wrap">
+            <div class="tools-title"><strong>Introduce an object</strong><span>Choose, then place anywhere in the habitat</span></div>
+            <div class="tool-buttons" aria-label="Objects to place">
+              <button class="item-tool" type="button" data-spawn="berry" title="Place edible berry"><span class="item-symbol berry-symbol">●</span><span>Berry</span></button>
+              <button class="item-tool" type="button" data-spawn="stone" title="Place stone"><span class="item-symbol stone-symbol">⬟</span><span>Stone</span></button>
+              <button class="item-tool" type="button" data-spawn="pod" title="Place seed pod"><span class="item-symbol pod-symbol">⬢</span><span>Seed pod</span></button>
+              <button class="item-tool" type="button" data-spawn="twig" title="Place twig"><span class="item-symbol twig-symbol">╱</span><span>Branch</span></button>
+              <button class="item-tool" type="button" data-spawn="beetle" title="Place reactive beetle"><span class="item-symbol beetle-symbol">✥</span><span>Beetle</span></button>
+              <button class="item-tool" type="button" data-spawn="puddle" title="Place puddle"><span class="item-symbol puddle-symbol">≈</span><span>Water</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="overview">
+          <div class="overview-item"><span>TIME ALIVE</span><strong id="lifeStage">Infant</strong><small>developmental stage</small></div>
+          <div class="overview-item"><span>INTERACTIONS</span><strong id="interactions">00</strong><small>physical experiments</small></div>
+          <div class="overview-item"><span>VISUAL CONCEPTS</span><strong id="categories">00</strong><small>learned appearances</small></div>
+          <div class="overview-item"><span>PREDICTION ERROR</span><strong id="surprise">0.0</strong><small>latest experience</small></div>
+        </section>
+
+        <section class="readme-panel">
+          <div class="small-icon">✳</div>
+          <div>
+            <h3>Not a scripted Tamagotchi.</h3>
+            <p>The creature receives a visual impression, not the object's true identity. It experiments, experiences physical consequences and updates its own learned action values. Try letting it bite a stone, discover a berry, or break open a seed pod.</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="right-panel">
+        <section class="pane creature-pane">
+          <div class="pane-head"><span class="eyebrow">SUBJECT / A-01</span><span class="version-tag">ALIVE</span></div>
+          <div class="creature-heading">
+            <div class="pet-emblem"><span class="ear left"></span><span class="ear right"></span><span class="face"><i></i><b></b></span></div>
+            <div><h2>Moss</h2><div class="mood-line"><span id="mood">Curious</span><span class="tiny-separator">·</span><span id="currentActivity">Considering</span></div></div>
+          </div>
+          <div class="divider"></div>
+          <div class="meter"><div class="meter-label"><span>Hunger</span><span id="hungerValue">30%</span></div><div class="meter-track"><div id="hungerBar" class="meter-fill hunger"></div></div></div>
+          <div class="meter"><div class="meter-label"><span>Energy</span><span id="energyValue">88%</span></div><div class="meter-track"><div id="energyBar" class="meter-fill energy"></div></div></div>
+          <div class="meter"><div class="meter-label"><span>Curiosity</span><span id="curiosityValue">82%</span></div><div class="meter-track"><div id="curiosityBar" class="meter-fill curiosity"></div></div></div>
+          <div class="meter"><div class="meter-label"><span>Stress</span><span id="stressValue">8%</span></div><div class="meter-track"><div id="stressBar" class="meter-fill stress"></div></div></div>
+        </section>
+
+        <section class="pane mind-pane">
+          <div class="pane-head"><span class="eyebrow">INNER STATE</span><span class="mind-ornament">✦</span></div>
+          <p id="mind" class="mind-quote">Everything is new. I wonder what that is.</p>
+          <div class="micro-caption">Current cognitive interpretation · generated locally from learning signals</div>
+        </section>
+
+        <section class="pane object-pane">
+          <div class="pane-head"><span class="eyebrow">OBJECT INSPECTOR</span><span class="pane-extra">PERCEPTION VS. REALITY</span></div>
+          <div id="selectedDetails" class="selected-details"></div>
+          <div class="actions-heading">Gently suggest an interaction</div>
+          <div class="suggest-grid">
+            <button type="button" class="suggest-btn" data-suggest="observe" disabled>Look</button>
+            <button type="button" class="suggest-btn" data-suggest="touch" disabled>Touch</button>
+            <button type="button" class="suggest-btn" data-suggest="push" disabled>Push</button>
+            <button type="button" class="suggest-btn" data-suggest="bite" disabled>Bite</button>
+            <button type="button" class="suggest-btn" data-suggest="play" disabled>Play</button>
+          </div>
+        </section>
+
+        <section class="pane memory-pane">
+          <div class="pane-head"><span class="eyebrow">ASSOCIATIVE MEMORY</span><span class="pane-extra">LEARNED FORMS</span></div>
+          <div id="concepts"></div>
+          <div class="reward-heading"><span>Experienced reward</span><span>RECENT HISTORY</span></div>
+          <canvas id="rewardChart" width="300" height="68" aria-label="Graph of rewards received during recent experiences"></canvas>
+        </section>
+
+        <section class="pane event-pane">
+          <div class="pane-head"><span class="eyebrow">EPISODIC MEMORY</span><span class="pane-extra">LATEST EXPERIENCES</span></div>
+          <div id="memories"></div>
+        </section>
+      </aside>
+    </main>
+    <footer class="footer"><span>BEHAVIOURSIM 0.1 · AN OPEN LEARNING EXPERIMENT</span><span>LOCAL SIMULATION · SAVED IN YOUR BROWSER · NO CLOUD REQUIRED</span></footer>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
