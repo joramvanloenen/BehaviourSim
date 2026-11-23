@@ -8,11 +8,11 @@ Once GitHub Pages has deployed, open **https://joramvanloenen.github.io/Behaviou
 
 To run locally without any tools beyond Python:
 
-\`\`\`bash
+```bash
 python -m http.server 8080
-\`\`\`
+```
 
-Then visit http://localhost:8080. (ES modules won't load reliably from a \`file://\` URL.)
+Then visit http://localhost:8080. (ES modules won't load reliably from a `file://` URL.)
 
 ### What to do
 
@@ -20,7 +20,7 @@ Then visit http://localhost:8080. (ES modules won't load reliably from a \`file:
 2. Click an object to reveal what Moss thinks it looks like, what happened previously, and how it currently values possible actions.
 3. Suggest **Look**, **Touch**, **Push**, **Bite**, or **Play** to guide an experiment. Moss will approach the selected object and experience the real consequences.
 4. Choose a type in **Introduce an object**, then click the landscape to add something new.
-5. Reload. The pet and its remembered experiences will persist using browser \`localStorage\`.
+5. Reload. The pet and its remembered experiences will persist using browser `localStorage`.
 6. **Reset** deliberately clears the experience and starts a new creature.
 
 ## What is genuinely implemented
@@ -45,9 +45,9 @@ The thought text describes simple local state and prediction error, not introspe
 
 The learner stores a running action-value estimate per **perceived visual concept** and action:
 
-\`\`\`text
+```text
 Q(concept, action) ← Q + 0.32 × (observed_reward − Q)
-\`\`\`
+```
 
 Observed reward is derived from **changes in hunger, energy and stress**, plus signals for pleasure/painful reactions and decreasing novelty. Selection also includes intrinsic interest in less-tried experiments. It is a contextual action-value estimator, not a complete Q-learning or deep-RL implementation.
 
@@ -61,11 +61,11 @@ Observed reward is derived from **changes in hunger, energy and stress**, plus s
 
 ## Architecture
 
-- \`index.html\` — accessible, responsive inspector and world controls.
-- \`styles.css\` — pixel-world dashboard, responsive desktop/mobile styling.
-- \`src/engine.js\` — render, interactions, physical response, visual perception, learning, action selection, persistence state.
-- \`src/main.js\` — lifecycle, controls, debugging UI, browser storage, fixed-step loop.
-- \`.github/workflows/pages.yml\` — GitHub Pages static deployment.
+- `index.html` — accessible, responsive inspector and world controls.
+- `styles.css` — pixel-world dashboard, responsive desktop/mobile styling.
+- `src/engine.js` — render, interactions, physical response, visual perception, learning, action selection, persistence state.
+- `src/main.js` — lifecycle, controls, debugging UI, browser storage, fixed-step loop.
+- `.github/workflows/pages.yml` — GitHub Pages static deployment.
 
 ## Next milestones
 
